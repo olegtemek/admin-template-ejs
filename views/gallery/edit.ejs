@@ -1,0 +1,55 @@
+<% layout('layouts/main.ejs') -%>
+
+
+  <div class="card-body">
+    <form method="POST" action="/admin/gallery/update/<%= slide.id %>" method="POST" enctype="multipart/form-data">
+      <div class="cart-body">
+        <div class="row">
+          <div class="col-sm-12 row mb-4">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Название</label>
+                <input type="text" class="form-control" value="<%= slide.title %>" name="title" placeholder="Название">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="text-danger" style="display: none;" id="errorImage">Только изображения</span>
+                <label>Фотография</label>
+                <input type="file" id="imgInp" class="form-control" name="image" placeholder="Выберите изображение">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <img id="imagePreview" src="/<%= slide.image %>" alt="Image" style="max-width: 150px; margin-top:10px;" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="row col-sm-12 mt-2">
+        <div class="col-sm-12">
+          <button class="btn btn-success" type="submit">Изменить слайд</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    imgInp.onchange = evt => {
+      errorImage.style.display = 'none'
+      const [file] = imgInp.files
+
+      if (file) {
+        if (file.type.split("/")[0] === 'image') {
+          imagePreview.style.display = 'block'
+          imagePreview.src = URL.createObjectURL(file)
+        } else {
+          errorImage.style.display = 'block'
+        }
+
+      }
+    }
+  </script>
